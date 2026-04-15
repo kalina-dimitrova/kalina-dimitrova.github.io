@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalina Dimitrova — Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:      #1a1916;
+    --ink-soft: #5a5850;
+    --ink-mute: #9a9890;
+    --paper:    #f5f3ee;
+    --cream:    #ede9e0;
+    --accent:   #2e5f4a;
+    --accent-lt:#d4e8df;
+    --line:     rgba(26,25,22,0.12);
+    --serif:    'DM Serif Display', Georgia, serif;
+    --sans:     'DM Sans', system-ui, sans-serif;
+    --max:      1100px;
+    --pad:      clamp(24px, 5vw, 64px);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px var(--pad);
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 120px var(--pad) 80px;
+    gap: 60px;
+    align-items: center;
+  }
+  .hero-left { }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    padding: 6px 12px;
+    background: var(--accent-lt);
+    border-radius: 2px;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+    line-height: 1.08;
+    color: var(--ink);
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-bio {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #234d3a; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-ghost:hover { border-color: var(--ink-soft); background: var(--cream); }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,25,22,0.08);
+  }
+  .stat-number {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--accent);
+    min-width: 56px;
+  }
+  .stat-label { font-size: 0.875rem; color: var(--ink-soft); line-height: 1.5; }
+  .stat-label strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── SECTION ── */
+  section {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 80px var(--pad);
+  }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    line-height: 1.15;
+    margin-bottom: 48px;
+    max-width: 560px;
+  }
+
+  /* ── CASE STUDIES ── */
+  .case-studies { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+
+  .case-study {
+    background: var(--paper);
+    padding: 40px 44px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    transition: background 0.2s;
+  }
+  .case-study:hover { background: var(--cream); }
+
+  .cs-meta { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .cs-tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    background: var(--accent-lt);
+    color: var(--accent);
+  }
+  .cs-tag.muted { background: var(--cream); color: var(--ink-mute); }
+
+  .cs-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .cs-summary { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.7; max-width: 620px; }
+
+  .cs-outcome {
+    margin-top: 18px;
+    padding: 14px 18px;
+    background: var(--accent-lt);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 2px 2px 0;
+    font-size: 0.875rem;
+    color: var(--accent);
+    display: inline-block;
+  }
+
+  .cs-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .cs-status {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cs-status::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink-mute);
+  }
+  .cs-status.live { color: var(--accent); }
+  .cs-status.live::before { background: var(--accent); }
+
+  .cs-coming {
+    background: var(--cream);
+    border: 1px dashed var(--line);
+    opacity: 0.7;
+  }
+  .cs-coming:hover { background: var(--cream); }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .skill-block {
+    background: var(--paper);
+    padding: 32px 28px;
+    transition: background 0.2s;
+  }
+  .skill-block:hover { background: var(--cream); }
+  .skill-icon {
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .skill-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+  .skill-desc { font-size: 0.875rem; color: var(--ink-soft); line-height: 1.6; }
+  .skill-tools { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    font-size: 0.72rem;
+    padding: 3px 9px;
+    background: var(--cream);
+    color: var(--ink-soft);
+    border-radius: 2px;
+    font-weight: 400;
+    border: 1px solid var(--line);
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .about-text p { font-size: 1rem; color: var(--ink-soft); line-height: 1.8; margin-bottom: 18px; }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .about-details { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-key { font-size: 0.8rem; color: var(--ink-mute); letter-spacing: 0.05em; }
+  .detail-val { font-size: 0.875rem; color: var(--ink); font-weight: 400; }
+
+  /* ── CONTACT ── */
+  .contact-strip {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 64px var(--pad);
+  }
+  .contact-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+  }
+  .contact-heading {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.2;
+    max-width: 440px;
+  }
+  .contact-heading em { font-style: italic; color: #8ab89f; }
+  .contact-links { display: flex; flex-direction: column; gap: 14px; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: rgba(245,243,238,0.7);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--paper); }
+  .contact-link-icon {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(245,243,238,0.2);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-link:hover .contact-link-icon { border-color: #8ab89f; background: rgba(138,184,159,0.1); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 28px var(--pad);
+    font-size: 0.8rem;
+    color: var(--ink-mute);
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── FADE IN ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 100px; }
+    .hero-right { display: none; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-inner { flex-direction: column; }
+    .case-study { grid-template-columns: 1fr; }
+    .cs-right { align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Kalina Dimitrova</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left fade-in">
+    <span class="hero-eyebrow">Data Scientist · The Hague</span>
+    <h1 class="hero-title">Turning messy data into<br><em>decisions that stick.</em></h1>
+    <p class="hero-bio">
+      I build end-to-end data workflows — from raw experimental data to reproducible pipelines, 
+      from business processes to analytics that actually get used. Based in The Hague, 
+      open to remote projects worldwide.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn btn-primary">See my work</a>
+      <a href="mailto:kalina.vdim@gmail.com" class="btn btn-ghost">Get in touch</a>
+      <a href="#" class="btn btn-ghost">Download CV</a>
+    </div>
+  </div>
+  <div class="hero-right fade-in" style="transition-delay:0.15s">
+    <div class="stat-card">
+      <span class="stat-number">5+</span>
+      <div class="stat-label">
+        <strong>Years at Merck KGaA</strong>
+        Pricing analytics, process automation, lab data pipelines
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">30→<br>100%</span>
+      <div class="stat-label">
+        <strong>On-time delivery improvement</strong>
+        Lean Six Sigma initiative across Western Europe
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">MSc</span>
+      <div class="stat-label">
+        <strong>Data Science & Society</strong>
+        Tilburg University, 2025–2026
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WORK -->
+<section id="work">
+  <p class="section-label">Selected work</p>
+  <h2 class="section-title fade-in">Projects that solved real problems.</h2>
+
+  <div class="case-studies fade-in">
+
+    <!-- Case study 1: ELISA -->
+    <div class="case-study">
+      <div class="cs-body">
+        <div class="cs-meta">
+          <span class="cs-tag">Python</span>
+          <span class="cs-tag">Docker</span>
+          <span class="cs-tag">REST API</span>
+          <span class="cs-tag">Lab automation</span>
+        </div>
+        <h3 class="cs-title">Automating ELISA assay analysis at Merck KGaA</h3>
+        <p class="cs-summary">
+          Experimental biologists at Merck were spending hours manually copying assay data from 
+          electronic lab notebooks into Excel and GraphPad for every experiment. The process was 
+          slow, error-prone, and impossible to scale as LNP research volumes grew. I built a 
+          Python pipeline that pulls data directly from the Revvity ELN API, runs curve fitting 
+          and metric extraction automatically, and writes results back — replacing a multi-step 
+          manual workflow with a single command.
+        </p>
+        <div class="cs-outcome">
+          One-click execution replaced hours of manual analysis per experiment
+        </div>
+      </div>
+      <div class="cs-right">
+        <span class="cs-status live">Live</span>
+      </div>
+    </div>
+
+    <!-- Case study 2: Pricing (coming May) -->
+    <div class="case-study cs-coming">
+      <div class="cs-body">
+        <div class="cs-meta">
+          <span class="cs-tag muted">Lean Six Sigma</span>
+          <span class="cs-tag muted">Salesforce</span>
+          <span class="cs-tag muted">SAP</span>
+          <span class="cs-tag muted">Celonis</span>
+        </div>
+        <h3 class="cs-title">Pricing workflow optimisation — Merck KGaA Western Europe</h3>
+        <p class="cs-summary">
+          A deep dive into commercial data across CRM, ERP, and process mining tools to identify 
+          bottlenecks in pricing agreement delivery across Western Europe — and a Lean Six Sigma 
+          initiative that fixed them.
+        </p>
+        <div class="cs-outcome" style="opacity:0.6">
+          On-time delivery improved from 30% to 100%
+        </div>
+      </div>
+      <div class="cs-right">
+        <span class="cs-status">Coming May</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">What I do</p>
+  <h2 class="section-title fade-in">The full stack, from data to decision.</h2>
+
+  <div class="skills-grid fade-in">
+    <div class="skill-block">
+      <span class="skill-icon">⬡</span>
+      <p class="skill-name">Data pipelines</p>
+      <p class="skill-desc">End-to-end workflows — ingestion, transformation, analysis, reporting. Reproducible and production-ready.</p>
+      <div class="skill-tools">
+        <span class="pill">Python</span>
+        <span class="pill">SQL</span>
+        <span class="pill">Docker</span>
+        <span class="pill">REST APIs</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <span class="skill-icon">◈</span>
+      <p class="skill-name">Analytics & BI</p>
+      <p class="skill-desc">Turning raw business data into dashboards and insights that actually drive decisions.</p>
+      <div class="skill-tools">
+        <span class="pill">Tableau</span>
+        <span class="pill">Salesforce</span>
+        <span class="pill">Celonis</span>
+        <span class="pill">SAP</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <span class="skill-icon">◎</span>
+      <p class="skill-name">Machine learning</p>
+      <p class="skill-desc">Predictive modelling and fairness evaluation applied to real-world structured data problems.</p>
+      <div class="skill-tools">
+        <span class="pill">Python</span>
+        <span class="pill">R</span>
+        <span class="pill">scikit-learn</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <span class="skill-icon">⬖</span>
+      <p class="skill-name">Process improvement</p>
+      <p class="skill-desc">Identifying and fixing bottlenecks in data and operational workflows using structured methodology.</p>
+      <div class="skill-tools">
+        <span class="pill">Lean Six Sigma</span>
+        <span class="pill">Celonis</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <span class="skill-icon">◫</span>
+      <p class="skill-name">Data engineering</p>
+      <p class="skill-desc">Containerised, API-connected pipelines that run reliably without manual intervention.</p>
+      <div class="skill-tools">
+        <span class="pill">Docker</span>
+        <span class="pill">GitHub</span>
+        <span class="pill">Linux</span>
+        <span class="pill">JSON</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <span class="skill-icon">◑</span>
+      <p class="skill-name">Stakeholder translation</p>
+      <p class="skill-desc">Bridging the gap between technical analysis and business decisions — fluent in both languages.</p>
+      <div class="skill-tools">
+        <span class="pill">Requirements analysis</span>
+        <span class="pill">Reporting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">Background</p>
+  <h2 class="section-title fade-in">Built at the intersection of business and data.</h2>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>
+        I started my career in commercial operations at Merck KGaA, where I quickly became 
+        the person who built the analyses and tools that others relied on. Over five years 
+        I moved from sales support to pricing analytics to leading a Lean Six Sigma initiative 
+        across Western Europe — and most recently, a part-time data science assignment building 
+        automated lab pipelines from scratch.
+      </p>
+      <p>
+        Alongside my work, I completed an MSc in Data Science and Society at Tilburg University, 
+        with a thesis on machine learning and fairness evaluation applied to Dutch public health data.
+      </p>
+      <p>
+        I'm now building toward independent data work — taking on clearly scoped projects where 
+        I can deliver end-to-end, own the outcome, and work across domains and industries.
+      </p>
+      <div style="margin-top: 28px;">
+        <a href="mailto:kalina.vdim@gmail.com" class="btn btn-primary">Work with me</a>
+      </div>
+    </div>
+    <div>
+      <div class="about-details">
+        <div class="detail-row">
+          <span class="detail-key">Based</span>
+          <span class="detail-val">The Hague, Netherlands</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Open to</span>
+          <span class="detail-val">Remote · Relocation</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Education</span>
+          <span class="detail-val">MSc Data Science, Tilburg</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Certification</span>
+          <span class="detail-val">Lean Six Sigma Blue Belt</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Languages</span>
+          <span class="detail-val">EN · BG · DE · NL</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Nationality</span>
+          <span class="detail-val">Bulgarian (EU)</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Availability</span>
+          <span class="detail-val">From November 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-strip" id="contact">
+  <div class="contact-inner">
+    <h2 class="contact-heading">Have a data problem worth <em>solving together?</em></h2>
+    <div class="contact-links">
+      <a href="mailto:kalina.vdim@gmail.com" class="contact-link">
+        <span class="contact-link-icon">✉</span>
+        kalina.vdim@gmail.com
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="contact-link">
+        <span class="contact-link-icon">in</span>
+        LinkedIn profile
+      </a>
+      <a href="https://github.com" target="_blank" class="contact-link">
+        <span class="contact-link-icon">&#60;/&#62;</span>
+        GitHub profile
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-link-icon">↓</span>
+        Download CV (PDF)
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 Kalina Dimitrova · Built with intent, shipped with purpose.
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // trigger hero immediately
+  document.querySelectorAll('.hero .fade-in').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 100);
+  });
+</script>
+</body>
+</html>
