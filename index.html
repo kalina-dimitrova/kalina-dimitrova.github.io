@@ -225,6 +225,41 @@
   }
   .cs-summary { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.7; max-width: 620px; }
 
+  .cs-expand-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+  .cs-expand-body.open {
+    max-height: 1000px;
+    opacity: 1;
+  }
+
+  .cs-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--sans);
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .cs-toggle:hover { color: #234d3a; }
+  .cs-toggle-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    font-size: 0.75rem;
+  }
+  .cs-toggle.open .cs-toggle-arrow { transform: rotate(180deg); }
+
   .cs-outcome {
     margin-top: 18px;
     padding: 14px 18px;
@@ -470,16 +505,25 @@
           <span class="cs-tag">Lab automation</span>
         </div>
         <h3 class="cs-title">Automating ELISA assay analysis at Merck KGaA</h3>
-        <p class="cs-summary">
-          Experimental biologists at Merck were spending hours manually copying assay data from
-          electronic lab notebooks into Excel and GraphPad for every experiment. The process was
-          slow, error-prone, and impossible to scale as LNP research volumes grew. I built a
-          Python pipeline that pulls data directly from the Revvity ELN API, runs curve fitting
-          and metric extraction automatically, and writes results back — replacing a multi-step
-          manual workflow with a single command.
-        </p>
         <div class="cs-outcome">
-          One-click execution replaced hours of manual analysis per experiment
+          Hours of manual analysis per experiment → one button click. Data foundation laid for ML-driven LNP screening at scale.
+        </div>
+        <button class="cs-toggle" onclick="toggleCase(this)">
+          Read case study <span class="cs-toggle-arrow">▾</span>
+        </button>
+        <div class="cs-expand-body">
+          <p class="cs-summary" style="margin-top: 16px;">
+            A team of five research scientists at Merck KGaA was running LNP experiments weekly — each one generating assay data that needed to be manually extracted, processed in Excel and GraphPad, and compiled into summary tables. The analysis was time-consuming, error-prone, and entirely dependent on individual scientists knowing the right steps. As experiment volumes grew, the manual process became a bottleneck — and a risk.
+          </p>
+          <p class="cs-summary" style="margin-top: 12px;">
+            The bigger picture made it more urgent: Merck was building toward a data infrastructure where standardised LNP experiment results would feed a centralised data lake, enabling ML-based prediction of the most promising LNP candidates for mRNA research via Palantir. That vision required clean, structured, consistently formatted data from every experiment. Manual Excel workflows couldn't deliver that at scale.
+          </p>
+          <p class="cs-summary" style="margin-top: 12px;">
+            I developed a Python pipeline integrated directly into the electronic lab notebook (Signals Revvity ELN) used by the research team. Scientists trigger the entire workflow with a single button click inside their existing experiment interface — no new tools to learn, no steps to remember. In the background, the pipeline pulls raw assay data via the ELN API, runs curve fitting and metric extraction automatically, and writes results back into the experiment as three structured summary tables and a visualisation. The pipeline was containerised with Docker for reliable deployment and built to scale across all experiments without modification.
+          </p>
+          <p class="cs-summary" style="margin-top: 12px;">
+            Hours of manual analysis per experiment were replaced with a process that takes seconds. After a company-wide demo, the pipeline attracted interest from multiple departments outside the research team. More importantly, it delivered what the larger data infrastructure required: clean, structured, consistently formatted results at the experiment level — laying the data foundation for ML-driven LNP screening at scale.
+          </p>
         </div>
       </div>
       <div class="cs-right">
@@ -687,6 +731,14 @@
   document.querySelectorAll('.hero .fade-in').forEach(el => {
     setTimeout(() => el.classList.add('visible'), 100);
   });
+
+  function toggleCase(btn) {
+    const body = btn.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open');
+    btn.classList.toggle('open');
+    btn.childNodes[0].textContent = isOpen ? ' Read case study ' : ' Hide case study ';
+  }
 </script>
 </body>
 </html>
