@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalina Dimitrova — Data Automation for SMEs</title>
+<meta name="description" content="Freelance data scientist helping small and mid-sized companies replace manual data workflows with automated, checked processes.">
+<meta name="theme-color" content="#f7f2ea">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317151a'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' text-anchor='middle' fill='%23f7f2ea'%3EKD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #f7f2ea;   /* warm cream, from the brick mortar */
+    --card:     #fffaf2;
+    --sand:     #eadfcb;
+    --ink:      #17151a;   /* near-black, from the vest */
+    --ink-soft: #4d463e;
+    --mute:     #756b5e;
+    --brick:    #8c5a3c;   /* from the brick wall */
+    --brick-dk: #6f432a;
+    --line:     rgba(23,21,26,0.12);
+    --serif:    'Fraunces', Georgia, 'Times New Roman', serif;
+    --sans:     'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --max:      1080px;
+    --pad:      clamp(22px, 5vw, 56px);
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  html.lock { overflow: hidden; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--brick);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(247,242,234,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto; padding: 14px var(--pad);
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .logo { font-family: var(--serif); font-size: 1.15rem; text-decoration: none; letter-spacing: 0.005em; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 0.92rem; text-decoration: none; color: var(--ink-soft); transition: color .2s; }
+  .nav-links a:hover { color: var(--brick); }
+  .nav-links a.btn-dark { color: var(--bg); }
+  .nav-links a.btn-dark:hover { color: var(--bg); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-block; font-family: var(--sans); font-size: 0.92rem; font-weight: 500;
+    padding: 12px 24px; border-radius: 999px; text-decoration: none; cursor: pointer;
+    border: 1px solid transparent; transition: background .2s, color .2s, border-color .2s;
+  }
+  .btn-dark { background: var(--ink); color: var(--bg); }
+  .btn-dark:hover { background: var(--brick-dk); }
+  .btn-line { background: transparent; color: var(--ink); border-color: rgba(23,21,26,0.3); }
+  .btn-line:hover { border-color: var(--ink); background: var(--sand); }
+  .btn-sm { padding: 9px 18px; font-size: 0.85rem; }
+
+  /* ── HERO ── */
+  .hero {
+    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 6vw, 80px);
+    align-items: center; padding-top: clamp(40px, 7vw, 88px); padding-bottom: clamp(56px, 8vw, 104px);
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--brick); margin-bottom: 22px;
+  }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--brick); }
+  h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(2.5rem, 5.4vw, 4.2rem); line-height: 1.07; letter-spacing: -0.015em;
+    margin-bottom: 26px;
+  }
+  h1 em { font-style: italic; color: var(--brick); }
+  .lead { font-size: 1.1rem; color: var(--ink-soft); max-width: 520px; margin-bottom: 34px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+  .hero-meta { font-size: 0.88rem; color: var(--mute); max-width: 520px; }
+
+  .portrait { position: relative; max-width: 380px; margin-left: auto; width: 100%; }
+  .portrait::before {
+    content: ''; position: absolute; inset: 18px -18px -18px 18px;
+    background: var(--sand); border-radius: 220px 220px 22px 22px; z-index: 0;
+  }
+  .portrait img {
+    position: relative; z-index: 1; display: block; width: 100%; height: auto;
+    aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 12%;
+    border-radius: 220px 220px 22px 22px; background: var(--sand);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: clamp(56px, 8vw, 96px) 0; }
+  .section-label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brick); margin-bottom: 12px; }
+  h2 {
+    font-family: var(--serif); font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+    line-height: 1.12; letter-spacing: -0.01em; max-width: 640px; margin-bottom: 14px;
+  }
+  .section-intro { color: var(--ink-soft); max-width: 560px; margin-bottom: 40px; }
+  .rule { border: none; border-top: 1px solid var(--line); max-width: var(--max); margin: 0 auto; }
+
+  /* ── WORK CARDS ── */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    padding: 28px 26px 24px; display: flex; flex-direction: column; cursor: pointer;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(23,21,26,0.09); border-color: rgba(140,90,60,0.4); }
+  .card-num { font-family: var(--serif); font-size: 1rem; color: var(--brick); margin-bottom: 14px; }
+  .card h3 { font-family: var(--serif); font-weight: 400; font-size: 1.32rem; line-height: 1.25; margin-bottom: 12px; }
+  .card-tags { font-size: 0.78rem; color: var(--mute); margin-bottom: 14px; letter-spacing: 0.02em; }
+  .card-outcome { font-size: 0.95rem; color: var(--ink-soft); margin-bottom: 22px; }
+  .card-link {
+    margin-top: auto; align-self: flex-start; background: none; border: none; padding: 0; cursor: pointer;
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 500; color: var(--brick-dk);
+    border-bottom: 1px solid rgba(111,67,42,0.35); padding-bottom: 2px;
+  }
+  .card-link:hover { color: var(--ink); border-color: var(--ink); }
+
+  .more-label { font-family: var(--serif); font-size: 1.25rem; margin: 52px 0 16px; }
+  .cards-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .card.mini { padding: 22px 24px; }
+  .card.mini h3 { font-size: 1.15rem; }
+
+  /* ── SERVICES ── */
+  .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+  .service { border-top: 1px solid var(--ink); padding-top: 18px; }
+  .service-num { font-family: var(--serif); color: var(--brick); font-size: 0.95rem; margin-bottom: 8px; }
+  .service h3 { font-family: var(--serif); font-weight: 400; font-size: 1.28rem; line-height: 1.25; margin-bottom: 10px; }
+  .service p { font-size: 0.95rem; color: var(--ink-soft); }
+  .services-note { margin-top: 32px; font-size: 0.92rem; color: var(--mute); }
+
+  /* ── ABOUT ── */
+  .about { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .about-text p { color: var(--ink-soft); margin-bottom: 16px; max-width: 560px; }
+  .facts { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 8px 24px; }
+  .fact { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .fact:last-child { border-bottom: none; }
+  .fact dt { font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute); }
+  .fact dd { font-size: 0.97rem; color: var(--ink); }
+
+  /* ── CONTACT ── */
+  .contact { background: var(--ink); color: var(--bg); padding: clamp(56px, 8vw, 88px) 0; }
+  .contact h2 { color: var(--bg); }
+  .contact h2 em { font-style: italic; color: #d9b896; }
+  .contact .lead { color: rgba(247,242,234,0.75); margin-bottom: 28px; }
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 44px; }
+  .btn-light { background: var(--bg); color: var(--ink); }
+  .btn-light:hover { background: #d9b896; }
+  .contact-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .contact-links a { color: rgba(247,242,234,0.8); font-size: 0.92rem; text-decoration: none; border-bottom: 1px solid rgba(247,242,234,0.3); padding-bottom: 2px; }
+  .contact-links a:hover { color: var(--bg); border-color: var(--bg); }
+  .start { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; border-top: 1px solid rgba(247,242,234,0.18); padding-top: 28px; }
+  .start strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.05rem; color: #d9b896; margin-bottom: 4px; }
+  .start span { font-size: 0.9rem; color: rgba(247,242,234,0.7); }
+
+  footer { text-align: center; padding: 26px var(--pad); font-size: 0.82rem; color: var(--mute); }
+
+  /* ── CASE STUDY DIALOGS ── */
+  dialog.case {
+    width: min(780px, 94vw); max-height: 90vh; margin: auto; padding: 0;
+    border: none; border-radius: 20px; background: var(--card); color: var(--ink);
+    box-shadow: 0 30px 80px rgba(23,21,26,0.35);
+  }
+  dialog.case::backdrop { background: rgba(23,21,26,0.55); backdrop-filter: blur(2px); }
+  dialog.case[open] { animation: pop .22s ease; }
+  @keyframes pop { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .case-inner { max-height: 90vh; overflow-y: auto; padding: 0 clamp(22px, 5vw, 44px) 40px; }
+  .close {
+    position: sticky; top: 14px; float: right; margin-top: 14px; z-index: 2;
+    width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line);
+    background: var(--bg); color: var(--ink); font-size: 1.3rem; line-height: 1; cursor: pointer;
+  }
+  .close:hover { background: var(--sand); }
+  .case-head { padding-top: 38px; margin-bottom: 8px; padding-right: 40px; }
+  .case-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .case-tags span { font-size: 0.74rem; font-weight: 500; letter-spacing: 0.04em; padding: 4px 11px; border-radius: 999px; background: var(--sand); color: var(--brick-dk); }
+  .case-head h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.18; margin-bottom: 8px; }
+  .case-sub { color: var(--ink-soft); }
+  .case-body h4 {
+    font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--brick); margin: 28px 0 8px;
+  }
+  .case-body p, .case-body li { color: var(--ink-soft); font-size: 0.98rem; }
+  .case-body p + p { margin-top: 10px; }
+  .case-body ul { padding-left: 20px; margin-top: 8px; }
+  .case-body ul + p { margin-top: 12px; }
+  .case-body li { margin-bottom: 5px; }
+  .case-body a { color: var(--brick-dk); }
+  .case-body .skills { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.88rem; color: var(--mute); }
+  blockquote.q {
+    margin: 12px 0 0; padding: 14px 18px; background: var(--bg); border-left: 3px solid var(--brick);
+    border-radius: 0 12px 12px 0; font-family: var(--serif); font-size: 1.02rem; line-height: 1.55; color: var(--ink);
+  }
+  blockquote.q cite { display: block; margin-top: 8px; font-family: var(--sans); font-style: normal; font-size: 0.82rem; color: var(--mute); }
+
+  /* ── FADE IN ── */
+  .js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    dialog.case[open] { animation: none; }
+    .card { transition: none; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .cards { grid-template-columns: 1fr; }
+    .services, .start { grid-template-columns: 1fr; gap: 26px; }
+    .about { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .nav-links li:not(:last-child) { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .portrait { margin: 0 auto; max-width: 300px; order: -1; }
+    .portrait::before { inset: 14px -12px -14px 12px; }
+    .portrait img, .portrait::before { border-radius: 160px 160px 20px 20px; }
+    .cards-2 { grid-template-columns: 1fr; }
+  }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="logo">Kalina Dimitrova</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="mailto:kalina.vdim@gmail.com?subject=Project%20enquiry" class="btn btn-dark btn-sm">Get in touch</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- HERO -->
+  <div class="wrap hero">
+    <div class="reveal">
+      <p class="eyebrow">Freelance data automation</p>
+      <h1>Automating the workflows that <em>slow your team down.</em></h1>
+      <p class="lead">Hi, I'm Kalina. I help commercial and operations teams at small and mid-sized companies replace manual data work with automated, checked processes, so they can trust their numbers and decide faster.</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn btn-dark">See my work</a>
+        <a href="mailto:kalina.vdim@gmail.com?subject=Project%20enquiry" class="btn btn-line">Get in touch</a>
+      </div>
+    </div>
+    <div class="portrait reveal">
+      <img src="images/kalina.jpg" width="768" height="1024" alt="Portrait of Kalina Dimitrova">
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <p class="section-label reveal">Selected work</p>
+      <h2 class="reveal">Projects that solved real problems.</h2>
+      <p class="section-intro reveal">Company and client details are left out on purpose.</p>
+
+      <div class="cards reveal">
+        <article class="card">
+          <div class="card-num">01</div>
+          <h3>Automated weekly pricing quality monitoring across 42 countries</h3>
+          <p class="card-tags">Python · PySpark · Salesforce + ERP</p>
+          <p class="card-outcome">From no checking at all to an automated weekly check, now used independently by three regional teams.</p>
+          <button class="card-link" data-open="pricing">Read the case study <span aria-hidden="true">→</span></button>
+        </article>
+        <article class="card">
+          <div class="card-num">02</div>
+          <h3>One-click ELISA analysis inside the lab notebook</h3>
+          <p class="card-tags">Python · Docker · REST API</p>
+          <p class="card-outcome">A manual Excel and GraphPad routine became one click, and a demo to about 100 colleagues drew interest across the company.</p>
+          <button class="card-link" data-open="elisa">Read the case study <span aria-hidden="true">→</span></button>
+        </article>
+        <article class="card">
+          <div class="card-num">03</div>
+          <h3>Cutting late pricing loads from 31.6% to 0%</h3>
+          <p class="card-tags">Lean Six Sigma · Salesforce dashboards</p>
+          <p class="card-outcome">On-time loading of pricing agreements rose from about 68% to 100%, beating the 80% project target.</p>
+          <button class="card-link" data-open="process">Read the case study <span aria-hidden="true">→</span></button>
+        </article>
+      </div>
+
+      <h3 class="more-label reveal">Practice and research</h3>
+      <div class="cards-2 reveal">
+        <article class="card mini">
+          <h3>SaaS user retention and growth analysis</h3>
+          <p class="card-tags">SQL · Python · Synthetic data</p>
+          <p class="card-outcome">A take-home exercise: what drives value, which onboarding works better, and how much capacity to plan for.</p>
+          <button class="card-link" data-open="saas">Read more <span aria-hidden="true">→</span></button>
+        </article>
+        <article class="card mini">
+          <h3>Predicting overweight across Dutch demographic groups, with a fairness check</h3>
+          <p class="card-tags">MSc thesis · Machine learning</p>
+          <p class="card-outcome">Which models predict best on unseen years, and who they serve worst.</p>
+          <button class="card-link" data-open="thesis">Read more <span aria-hidden="true">→</span></button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <p class="section-label reveal">Services</p>
+      <h2 class="reveal">Three ways to work together.</h2>
+      <p class="section-intro reveal">Most small teams don't need a big data project. They need one painful, manual process to stop being painful.</p>
+      <div class="services reveal">
+        <div class="service">
+          <div class="service-num">01</div>
+          <h3>Reconcile and monitor</h3>
+          <p>Compare two systems, such as your CRM against accounting or ERP, and get a weekly report of mismatches in a simple dashboard, with alerts to the right person.</p>
+        </div>
+        <div class="service">
+          <div class="service-num">02</div>
+          <h3>Automate a recurring analysis or report</h3>
+          <p>Turn a spreadsheet or reporting routine that only one person knows into a one-click, consistent process inside the tools you already use.</p>
+        </div>
+        <div class="service">
+          <div class="service-num">03</div>
+          <h3>Workflow diagnostic (1–2 weeks)</h3>
+          <p>A short, fixed-scope review of your manual data workflows, ending with a ranked list of what to automate first.</p>
+        </div>
+      </div>
+      <p class="services-note reveal">Also: dashboards, one-off analyses and forecasting. Fixed-scope or hourly, whichever suits the project. I work in English and Bulgarian.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap about">
+      <div class="about-text reveal">
+        <p class="section-label">About</p>
+        <h2>Built at the intersection of business and data.</h2>
+        <p>I started in commercial operations at a global science and technology company and became the person who built the analyses and tools others relied on. From sales support I moved into pricing analytics, led a Lean Six Sigma project that took late pricing loads from 31.6% to 0%, built an automated lab-analysis tool in a part-time data science assignment, and most recently built a pricing quality report in Palantir that checks pricing data across multiple ERP systems.</p>
+        <!-- Add your employer's name in the paragraph above if you are allowed to, for example "at <company name>". -->
+        <p>I work with teams that have outgrown their manual workflows: data lives in disconnected systems, reporting depends on one person, and decisions get delayed because nobody fully trusts the numbers. Coming from the business side, I start with how your team actually works, then take the problem end to end, from scoping the workflow to delivering something that runs.</p>
+      </div>
+      <dl class="facts reveal">
+        <div class="fact"><dt>Based</dt><dd>The Netherlands · remote</dd></div>
+        <div class="fact"><dt>Languages</dt><dd>English · Bulgarian</dd></div>
+        <div class="fact"><dt>Tools</dt><dd>Python (mainly) · SQL · R<br>REST APIs · Docker · GitHub · Linux<br>Palantir Foundry · Tableau · Celonis<br>Salesforce · SAP</dd></div>
+        <div class="fact"><dt>Education</dt><dd>MSc Data Science and Society, Tilburg University</dd></div>
+        <div class="fact"><dt>Open to</dt><dd>Project-based work, fixed-scope or hourly</dd></div>
+        <div class="fact"><dt>Availability</dt><dd>Available now</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact" id="contact">
+    <div class="wrap">
+      <h2 class="reveal">Got a workflow your team has <em>outgrown?</em></h2>
+      <p class="lead reveal">Send me a few lines about it and I'll tell you honestly whether and how I can help.</p>
+      <div class="contact-actions reveal">
+        <a href="mailto:kalina.vdim@gmail.com?subject=Project%20enquiry" class="btn btn-light">kalina.vdim@gmail.com</a>
+        <div class="contact-links">
+          <a href="https://www.linkedin.com/in/kalina-dimitrova-a4517a165/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/kalina-dimitrova" target="_blank" rel="noopener">GitHub</a>
+          <!-- Add your CV when it is ready: put the PDF in the same folder and uncomment the next line.
+          <a href="Kalina_Dimitrova_CV.pdf">CV (PDF)</a>
+          -->
+        </div>
+      </div>
+      <div class="start reveal">
+        <div><strong>1. Send a few lines</strong><span>What the workflow is, who depends on it, and what breaks.</span></div>
+        <div><strong>2. Short intro call</strong><span>I ask questions and tell you what I'd do.</span></div>
+        <div><strong>3. Proposal</strong><span>Deliverables, timeline and price, fixed-scope or hourly.</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>© 2026 Kalina Dimitrova</footer>
+
+<!-- ═════════ CASE STUDIES ═════════ -->
+
+<dialog class="case" id="pricing" aria-labelledby="pricing-title">
+  <div class="case-inner">
+    <button class="close" type="button" aria-label="Close case study">×</button>
+    <div class="case-head">
+      <div class="case-tags"><span>Python</span><span>PySpark</span><span>Salesforce + ERP</span><span>Data quality</span></div>
+      <h3 id="pricing-title">Automated weekly pricing quality monitoring across 42 countries</h3>
+      <p class="case-sub">Catching mismatches between a CRM and multiple ERP systems that nobody was checking.</p>
+    </div>
+    <div class="case-body">
+      <h4>Context</h4>
+      <p>A global science and technology company sets customer-specific prices across 42 countries and about 400K products per legal entity. Each agreement is entered in Salesforce and then loaded into several ERP systems, manually or automatically. Three regional pricing teams (about 20 people) own these conditions.</p>
+
+      <h4>Problem</h4>
+      <p>An internal audit flagged that nobody monitored the quality of pricing conditions in the ERP. No one could confirm that agreements had been loaded correctly and as approved. Both manual and automatic loading can go wrong, and mistakes were only caught if someone noticed a discrepancy on an order, by which time a customer might already have paid the wrong price.</p>
+
+      <h4>What I built</h4>
+      <p>An automated weekly report that compares each week's pricing agreements in Salesforce with the ERP, field by field: dates, material, discount and discount type, currency, customer numbers and more. It classifies each difference by type (for example, a wrong discount type, a mismatched end date, a product missing in the ERP, or an agreement already superseded by a newer one) and shows them by legal entity, so each team sees what to fix. Alerts go to the pricing teams so they can correct errors right away.</p>
+      <p>Behind it is a pipeline that cleans and standardizes the Salesforce and ERP sources separately, runs dedicated matching steps for different pricing types, and combines everything into one mismatch table. The data came from 8 datasets and amounted to hundreds of millions of rows, which I reduced to a weekly view.</p>
+
+      <h4>My role</h4>
+      <p>I did the exploratory analysis, data cleaning, pipeline design and build, and the dashboard myself. The pricing teams helped me diagnose a few mismatches I couldn't explain on my own.</p>
+
+      <h4>Results</h4>
+      <ul>
+        <li>Moved pricing quality from no checking at all to an automated weekly check across all regions, live since September 2026</li>
+        <li>Around 5% of checked agreements showed mismatches that previously would have gone unnoticed</li>
+        <li>The pricing teams address every flagged mismatch within the week</li>
+        <li>Resolved the audit finding</li>
+        <li>All three regional teams use it independently of me, and more are being onboarded</li>
+      </ul>
+      <blockquote class="q">“Thank you for producing and rolling out the [Salesforce–ERP] comparison tool. This is answering a requirement of the audit, but also addressing a real business need.”<cite>Senior colleague, Global Pricing</cite></blockquote>
+      <blockquote class="q">“Your work will make management of [pricing agreement] data quality much more efficient and help to resolve an audit issue.”<cite>Head of Global Pricing</cite></blockquote>
+
+      <h4>Hardest part</h4>
+      <p>Standardizing across regions and systems. Pricing differs by region (customer number types, material codes, which pricing types are used, different Salesforce processes), and the data lived in several different ERPs with different structures. The challenge was building one standardized report that every team could use, with no separate version per region or system.</p>
+
+      <h4>Approach</h4>
+      <p>I built the logic in plain Python (PySpark) in an iterative notebook environment so I could refine the matching step by step. I chose one global report over per-region versions to keep it maintainable.</p>
+
+      <h4>What this looks like in a smaller company</h4>
+      <p>Smaller companies often have the same hidden risk: prices, orders or customer records in a CRM that don't match their accounting or ERP system, and nobody checking. The logic is plain Python, the dashboard can be built in whatever software you use, and I only need the raw data. I can set up the same weekly reconciliation with alerts for you.</p>
+      <!-- Add later: a redrawn pipeline diagram and a mocked-up dashboard with dummy data (no real screenshots). -->
+
+      <p class="skills"><strong>Tools:</strong> Python, PySpark, Palantir Foundry (Code Workbook, Contour, Automations)</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="case" id="elisa" aria-labelledby="elisa-title">
+  <div class="case-inner">
+    <button class="close" type="button" aria-label="Close case study">×</button>
+    <div class="case-head">
+      <div class="case-tags"><span>Python</span><span>Docker</span><span>REST API</span><span>Lab automation</span></div>
+      <h3 id="elisa-title">One-click ELISA analysis inside the lab notebook</h3>
+      <p class="case-sub">Replacing a manual Excel and GraphPad workflow with a reproducible, automated pipeline.</p>
+    </div>
+    <div class="case-body">
+      <h4>Context</h4>
+      <p>A research team at a global science and technology company tested lipid nanoparticles (LNPs) for mRNA delivery research, running ELISA assays as part of their experiments. I worked on this as a six-month, part-time data science assignment (Oct 2025 – Mar 2026).</p>
+
+      <h4>Problem</h4>
+      <p>Each experiment's results were extracted by hand, processed in Excel and GraphPad, and compiled into summary tables. The process was slow, prone to errors, and relied on each scientist knowing the right steps.</p>
+
+      <h4>What I built</h4>
+      <p>A Python pipeline that runs inside the team's electronic lab notebook. A scientist clicks one button in the experiment they're already working in, and the pipeline does the rest:</p>
+      <ul>
+        <li>Pulls the raw plate data through the notebook's API</li>
+        <li>Fits the curves and extracts the key metrics</li>
+        <li>Writes the results back into the experiment as three summary tables (means, standard deviations, errors, concentration averages, etc.) and a bar chart comparing the formulations</li>
+      </ul>
+      <p>It shows a clear error message when a step fails and says why. I containerized it with Docker so it deploys the same way every time. It's built for the team's standard ELISA plate layout, so other assay formats would need new analysis logic.</p>
+
+      <h4>My role</h4>
+      <p>I wrote the whole pipeline myself: the API integration, the analysis logic, the output formatting, containerization and deployment. The ELISA analysis was specified by the team through their existing Excel files, and I worked within the existing GitHub repository and the notebook's API.</p>
+
+      <h4>Results</h4>
+      <ul>
+        <li>Replaced the manual Excel and GraphPad workflow with one-click analysis, so results are consistent and no longer depend on one person's know-how</li>
+        <li>Checked the outputs against completed experiments from the team's own Excel files</li>
+        <li>After a company-wide demo to about 100 colleagues, I received multiple messages from people across the company who wanted to use it, besides the team I was hired for</li>
+      </ul>
+      <!-- Left out on purpose until you have the real numbers from your colleague: how long the analysis took before and after. -->
+      <blockquote class="q">“Kalina demonstrated strong technical skills by developing software that seamlessly interacted with diverse data types and a complex infrastructure, all while adhering to best practices around code quality, user experience, and security.”<cite>Senior colleague, Data Science (Bioinformatics)</cite></blockquote>
+
+      <h4>Hardest part</h4>
+      <p>Getting up to speed on the notebook system and its API at the start. I had no prior experience with either and had to learn them while building.</p>
+
+      <h4>What this looks like in a smaller company</h4>
+      <p>Many companies have a recurring analysis done in a spreadsheet by one person who knows the steps. I can build the same kind of one-click automation inside the tools your team already uses, with consistent results, clear error messages, and no new software to learn.</p>
+      <!-- Add later: a simple architecture diagram (notebook → pipeline → results written back). -->
+
+      <p class="skills"><strong>Skills:</strong> Python, API integration, curve fitting, Docker, deployment, scientific data processing</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="case" id="process" aria-labelledby="process-title">
+  <div class="case-inner">
+    <button class="close" type="button" aria-label="Close case study">×</button>
+    <div class="case-head">
+      <div class="case-tags"><span>Lean Six Sigma</span><span>Salesforce dashboards</span><span>Project management</span></div>
+      <h3 id="process-title">Cutting late pricing loads from 31.6% to 0%: a process improvement project</h3>
+      <p class="case-sub">Lean Six Sigma Blue Belt project, 2022.</p>
+    </div>
+    <div class="case-body">
+      <h4>The problem</h4>
+      <p>A pricing team manually loaded customer-specific agreements into SAP when they couldn't transfer automatically from Salesforce. In the baseline period of 3 months, 31.58% of these agreements were loaded after their approved start date, which risked customers being charged the wrong price. The process depended on people remembering to check scattered reports, with no clear ownership and no escalation when something stalled.</p>
+
+      <h4>What I did</h4>
+      <p>I led the project from start to finish as project manager. I measured the problem and traced every late case back to its root cause. Most came from fragmented reporting, missing habits for checking, and gaps in user training. Then I:</p>
+      <ul>
+        <li>Built one standardized Salesforce dashboard to replace the scattered reports</li>
+        <li>Redefined who handles which agreements</li>
+        <li>Introduced visualizations that flag incorrect submissions so they can be sent back</li>
+        <li>Ran knowledge-sharing sessions across 8 regions</li>
+        <li>Set up monthly KPIs and regular reviews so the improvement would last</li>
+      </ul>
+
+      <h4>Results</h4>
+      <ul>
+        <li>On-time loading rose from about 68% to 100% of in-scope agreements (roughly 150 a week) between 19 September and 12 October 2022, beating the 80% target in the project charter</li>
+        <li>The result held across the wider scope too</li>
+        <li>It has held since then as far as I know</li>
+        <li>Completed as a certified Lean Six Sigma Blue Belt project (exam plus completed project, awarded by my employer)</li>
+      </ul>
+
+      <p class="skills"><strong>Skills:</strong> project management, root-cause analysis, dashboard design, stakeholder management across regions, process improvement</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="case" id="saas" aria-labelledby="saas-title">
+  <div class="case-inner">
+    <button class="close" type="button" aria-label="Close case study">×</button>
+    <div class="case-head">
+      <div class="case-tags"><span>Practice case study</span><span>Synthetic data</span><span>SQL</span><span>Python</span></div>
+      <h3 id="saas-title">SaaS user retention and growth analysis</h3>
+      <p class="case-sub">A take-home exercise on a synthetic SaaS dataset: what drives value, which onboarding approach works better, and how much capacity to plan for.</p>
+    </div>
+    <div class="case-body">
+      <h4>What I did</h4>
+      <ul>
+        <li>Used SQL for segment revenue and usage analysis</li>
+        <li>Compared tenure-weighted revenue across segments</li>
+        <li>Tested two onboarding approaches with Welch's t-test and effect size</li>
+        <li>Built a daily-active-user forecast validated on a 2025 holdout, with 95% prediction intervals</li>
+      </ul>
+
+      <h4>Findings (on synthetic data)</h4>
+      <p>Usage is similar across segments, but enterprise accounts have 5–13x higher tenure-weighted MRR. Onboarding B lifts average adoption intensity by about 15% (a small-to-moderate effect). Expected Q1 2026 daily active users are around 1,620, with an upper bound near 1,950.</p>
+
+      <h4>Code</h4>
+      <p><a href="https://github.com/kalina-dimitrova/saas-retention-growth-analysis" target="_blank" rel="noopener">Notebook, slides and README on GitHub</a></p>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="case" id="thesis" aria-labelledby="thesis-title">
+  <div class="case-inner">
+    <button class="close" type="button" aria-label="Close case study">×</button>
+    <div class="case-head">
+      <div class="case-tags"><span>MSc thesis</span><span>Machine learning</span><span>Fairness evaluation</span></div>
+      <h3 id="thesis-title">Predicting overweight across Dutch demographic groups, with a fairness check</h3>
+      <p class="case-sub">MSc thesis, Tilburg University, 2025.</p>
+    </div>
+    <div class="case-body">
+      <h4>Approach</h4>
+      <p>I compared linear regression, random forest, XGBoost and LightGBM on aggregated public CBS survey data (2016–2024). I validated the way a real forecaster would, with leave-one-year-out cross-validation plus a final test on unseen 2023–24 data.</p>
+
+      <h4>Findings</h4>
+      <p>The simplest model, linear regression, predicted overweight best, with an average error of about 2.9 percentage points on unseen years. For severe overweight, LightGBM did best, at 1.63 points. Errors were not spread evenly: mid-life adults, single households and lower-educated groups had up to four times the error of the best-served groups.</p>
+
+      <h4>Takeaway</h4>
+      <p>Start with a transparent baseline, validate across time, and check who a model serves worst.</p>
+      <!-- Add the code link here once you have checked that the GitHub repository URL works. -->
+    </div>
+  </div>
+</dialog>
+
+<script>
+  // fade-in on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // case study dialogs
+  const root = document.documentElement;
+  function openCase(id) {
+    const d = document.getElementById(id);
+    if (!d || !d.matches('dialog.case')) return;
+    d.showModal();
+    root.classList.add('lock');
+    d.querySelector('.case-inner').scrollTop = 0;
+    history.replaceState(null, '', '#' + id);
+  }
+  document.querySelectorAll('[data-open]').forEach(btn => {
+    btn.addEventListener('click', e => { e.stopPropagation(); openCase(btn.dataset.open); });
+  });
+  // make the whole card clickable
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => card.querySelector('[data-open]').click());
+  });
+  document.querySelectorAll('dialog.case').forEach(d => {
+    d.querySelector('.close').addEventListener('click', () => d.close());
+    d.addEventListener('click', e => { if (e.target === d) d.close(); });   // click on backdrop
+    d.addEventListener('close', () => {
+      root.classList.remove('lock');
+      if (location.hash === '#' + d.id) history.replaceState(null, '', location.pathname + location.search);
+    });
+  });
+  // open a case study directly from a link such as ...#pricing
+  if (location.hash.length > 1) openCase(location.hash.slice(1));
+</script>
+</body>
+</html>
